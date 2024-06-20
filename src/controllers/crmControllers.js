@@ -18,10 +18,38 @@ export const addNewContact = async (req, res) => {
 
 export const getContacts = async (req, res) => {
     try {
-        const contacts = await Contact.find({});
-        res.json(contacts);
+        const contact = await Contact.find({});
+        res.json(contact);
     } catch (err) {
         res.status(400).send(err);
     }
 };
 
+
+export const getContactsWithId = async (req, res) => {
+    try {
+        const contact = await Contact.findById(req.params.contactId);
+        res.json(contact);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+};
+
+
+export const updateContact = async (req, res) => {
+    try {
+        const contact = await Contact.findOneAndUpdate({_id:req.params.contactId}, req.body, {new:true});
+        res.json(contact);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+};
+
+export const deleteContact = async (req, res) => {
+    try {
+        const contact = await Contact.findOneAndDelete({_id:req.params.contactId});
+        res.json({message :"supression du contact avec succés"});
+    } catch (err) {
+        res.status(400).send(err);
+    }
+};
